@@ -1,0 +1,156 @@
+public function payment()
+
+  {
+
+    require_once('app/Libraries/stripe/init.php');
+
+    $gatway   = $this->Payment_model->singledata('stripe');
+
+    // $gatway->secret_key;
+
+    $stripeSecret = $gatway->secret_key; //'sk_test_51IM411CCvrjiGITFDdiyn5PVmpv70A8wIBdiLLZMqkbjdsrcHtLUnrkLQyAyLUs3eLIoMn61rFPntc3Hu6JCFxes00Ems0MNBw';
+
+
+
+    \Stripe\Stripe::setApiKey($stripeSecret);
+
+
+
+    $stripe = \Stripe\Charge::create([
+
+      "amount" => $this->request->getVar('amount'),
+
+      "currency" => "usd",
+
+      "source" => $this->request->getVar('tokenId'),
+
+      "description" => "Email: " . $this->request->getVar('email')
+
+    ]);
+
+
+
+    // after successfull payment, you can store payment related information into your database
+
+    $chargeJson = $stripe->jsonSerialize();
+
+    $amount                  = $chargeJson['amount'];
+
+    $balance_transaction     = $chargeJson['balance_transaction'];
+
+    $currency                = $chargeJson['currency'];
+
+    $tokenID                  = $chargeJson['source'];
+
+    $ID                  = $chargeJson['id'];
+
+
+
+    $payment = array(
+
+      'currency' => $currency,
+
+      'amount'   => $this->request->getVar('amount'),
+
+      'ref_id'   => $ID,
+
+      'other_id'   => 2,
+
+    );
+
+    $this->ApplicationModel->add_payment($payment);
+
+    $userid = $this->db->insertID();
+
+
+
+
+
+
+
+    if (empty(!$userid)) {
+
+
+
+      $data = $this->ApplicationModel->findUserCart();
+
+
+
+
+
+      foreach ($data as  $value) {
+
+        $app[] = array(
+
+          'payment_id'   => $userid,
+
+          'user_id'   => $_SESSION['id'],
+
+          'fees'   => $value->fees,
+
+          'course_id'   => $value->course_id,
+
+          'apply_date'   => $value->apply_date,
+
+          'university_id'   => $value->university_id,
+
+          'doc_id'   => $value->doc_id,
+
+          'app_id'   => $value->app_id,
+
+          'status'   => 0
+
+        );
+
+        //print_r($app);exit;
+
+        $this->ApplicationModel->delete_cart($value->id);
+      }
+
+
+
+      $this->ApplicationModel->add_application($app);
+
+      //echo '1';
+
+      //$temp = array('success' => true, 'data'=> $stripe);
+
+      // $temp = json_encode($stripe);
+
+      // print_r($temp);
+      $userData = $this->UserModel->singledata($_SESSION['id']);
+      $web_info = $this->db->table('setting')->get()->getRow();
+      $config_var = array(
+        'template_name' => 'application_submit',
+        //'template_lang' => $web_info->language == 'english' ? 'en' : 'fr',
+        'template_lang' => 'en',
+      );
+      $template = array(
+        'fullname' => $userData->firstname . ' ' . $userData->lastname,
+        'company_name' => $web_info->title,
+      );
+      //$to = 'salman.bdtask@gmail.com';
+      $to = $userData->email;
+
+      $message    = $this->email_msg_generate($config_var, $template);
+
+      //print_r($message);exit;
+      $email = \Config\Services::email();
+
+      $email->setFrom($web_info->email, $web_info->title);
+
+      $email->setTo($to);
+
+      $email->setSubject($message['subject']);
+
+      $email->setMessage($message['message']);
+
+      if ($email->send()) {
+        $this->session->setFlashdata('message', 'Successful Save');
+        echo json_encode($userid);
+      }
+    } else {
+
+      echo '0';
+    }
+  }

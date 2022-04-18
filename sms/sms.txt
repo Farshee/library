@@ -1,0 +1,35 @@
+public function send_sms($message_data = [], $template = [])
+    {
+
+    // $templateemail = $this->db->select('*')->from('sms_settings a')->where('a.template_name', $template['template_name'])->get()->row();
+    // $message = $templateemail->body;
+    // if (is_array($message_data) && sizeof($message_data) > 0) {
+    //     $message = $this->_template($message, $message_data);
+    // }
+
+        $sms_data = $this->db->table('sms_settings')->where('id', 1)->get()->getRow();
+        //print_r($sms_data);exit;
+        $contacts = $template['mobile'];
+        $urltopost = $sms_data->urltopost;
+        $data = [
+            "api_key" => $sms_data->api_key,
+            "type" => "unicode",
+            "contacts" => $contacts,
+            "senderid" => $sms_data->senderid,
+            "msg" => $message_data['otp'],
+        ];
+        $ch = curl_init($urltopost);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        $result = curl_exec($ch);
+        if ($result === false) {
+            echo sprintf('<span>%s</span>CURL error:', curl_error($ch));
+            return  'not sent';
+        }
+        //print_r($result);
+        curl_close($ch);
+        //return 1;
+    }

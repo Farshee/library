@@ -1,0 +1,9 @@
+ $config = array(
+                'otp' => "Your otp number is " . $otp,
+            );
+
+            $template = array(
+                //'template_name' => 'password_reset',
+                'mobile' => $mobile,
+            );
+            $sms = $this->send_sms($config, $template);

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type = "text/javascript" 
+         src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+      </script>
+</head>
+<body>
+    <div id="error" style="color: red;"></div>
+    <input type="hidden" id="item_counter" value="1">
+    <table id="tbl_test" border="1px solid">
+        <thead>
+            <tr>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="test">
+        
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2"><span id="total_qty">Total Price:</span></td>
+                <td><span id="total_price"></span></td>
+            </tr>
+        </tfoot>
+    </table>
+     <script type = "text/javascript" language = "javascript">
+       
+        $(document).ready(function() {
+            var item_counter = 1;
+            var html = '<tr><td><input type="text" id="one' + item_counter + '" class="qty" onkeyup="po_calculation('+item_counter+')"></td><td><input type="text" id="two' + item_counter + '" onkeyup="po_calculation('+item_counter+')"></td><td><input type="text" id="price' + item_counter + '" class="price" readonly></td><td><button type="button" class="add">Add (+)</button></td></tr>'
+            $("#test").html(html);
+            total_cal();
+            $("#item_counter").val(item_counter);
+        });
+           
+        $('#test').on('click', '.add', function() {
+            var item_counter = parseInt($("#item_counter").val());
+            item_counter += 1;
+            $("#item_counter").val(item_counter);
+            var html = '<tr><td><input type="text" id="one' + item_counter + '" class="qty" onkeyup="po_calculation('+item_counter+')"></td><td><input type="text" id="two' + item_counter + '" onkeyup="po_calculation('+item_counter+')"></td><td><input type="text" id="price' + item_counter + '" class="price" readonly></td><td><button type="button" class="delete">Delete (-)</button></td></tr>'
+            $("#test").append(html);
+            total_cal();
+        });
+        
+        $('#test').on('click', '.delete', function() {
+            var rowCount = $('#tbl_test >tbody >tr').length;
+            if (rowCount > 1) {
+                $(this).parent().parent().remove();
+                po_calculation();
+            } else {
+                $("#error").text('one row left atleast');
+            }
+        });
+
+          //      function removeTr(e){
+        //      var e = e.parentNode.parentNode;
+        //       e.parentNode.removeChild(e);
+        // }
+
+       
+
+        //item calculation
+        function po_calculation(sl){
+
+        var qty = ($("#one"+sl).val()=='')?0:$("#one"+sl).val();
+
+        var unit_price = ($("#two"+sl).val()=='')?0:$("#two"+sl).val();
+
+        var po_price = unit_price*qty;
+
+        var price = $("#price"+sl).val(po_price);
+
+        // var vat_applicable = ($("#po_vat"+sl).val()=='')?0:$("#po_vat"+sl).val();
+
+        // var vat  =  po_price * <?php echo @$vat/100; ?>
+        
+        // if(vat_applicable =='1' ){
+        //     $("#total_vat"+sl).val(vat);
+        // } else {
+        //     $("#total_vat"+sl).val(0);
+        // }
+        //po_calculation_total();
+        total_cal();
+    }
+
+    function total_cal() {
+        var gr_tot = 0;
+        $(".price").each(function() {
+            isNaN(this.value) || 0 == this.value.length || (gr_tot += parseFloat(this.value))
+        });
+        $("#total_price").text(gr_tot);
+    }
+    
+        $(document).on('keyup', '.price', function() {
+        total_cal();
+    });
+
+    // function po_calculation_total(){        
+                
+    //     var sub_total = 0; 
+    //     var vat_total = 0; 
+
+    //     $(".po_price").each(function () {
+    //         sub_total += parseFloat(this.value);       
+    //     });
+
+
+    //     $(".total_vat").each(function () {
+    //         vat_total += parseFloat(this.value);       
+    //     });
+
+    //     $("#po_vat_amount").val(vat_total.toFixed(2));
+    //     $("#po_sub_total").val(sub_total.toFixed(2));
+
+    //     var grand_total = sub_total+vat_total;
+    //     $("#po_grand_total").val(grand_total.toFixed(2));
+    // }
+      </script>
+</body>
+</html>

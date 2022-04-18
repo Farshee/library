@@ -1,0 +1,39 @@
+public function invoiceToPDF($pay_id = null)
+  {
+
+    require_once('app/Libraries/dompdf/autoload.inc.php');
+
+    $dompdf = new Dompdf();
+
+    $options = new Options();
+
+
+
+    $data['payments']       = $this->ApplicationModel->findInvoicePayment($pay_id);
+
+    $data['stripes']       = $this->ApplicationModel->payment_detail($pay_id);
+
+    $data['application']       = $this->ApplicationModel->findInvoice($pay_id);
+
+    $data['settings_info'] = $this->template->setting_data();
+
+    $dompdf->loadHtml(view('template/frontend/invoice_pdf', $data));
+
+
+
+    // (Optional) Setup the paper size and orientation
+
+    $dompdf->setPaper('A4', 'landscape');
+
+    $options->setIsHtml5ParserEnabled(true);
+
+    // Render the HTML as PDF
+
+    $dompdf->render();
+
+
+
+    // Output the generated PDF to Browser
+
+    $dompdf->stream('Invoice.pdf');
+  }

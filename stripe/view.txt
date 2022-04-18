@@ -1,0 +1,154 @@
+<style>
+	@media (min-width: 1500px){
+        .footer_wrapper{     
+        position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    }}
+</style>
+
+<div class="container mt-5 py-5">
+	<div class="row">
+	<div class="col-md-12">
+
+		<div class="card">
+			<div class="card-header">
+				<h4><?php echo lan('checkout') ?> <small class="float-right"><a href="<?php echo base_url('students/load_cart'); ?>" class="btn btn-primary btn-md"><i class="ti-plus" aria-hidden="true"></i><?php echo lan('cart') ?></a></small></h4>
+			</div>
+			<div class="card-body">
+				<form id="formElem" action="<?php echo site_url('students/application') ?>" method="post">
+					<table class="table display table-bordered table-striped table-hover">
+						<thead>
+							<tr>
+
+								<th><?php echo lan('university') ?></th>
+								<th><?php echo lan('handling_fees') ?></th>
+								<th><?php echo lan('subject') ?></th>
+								<th><?php echo lan('applied_date') ?></th>
+
+
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							$sl = 1;
+							$total = 0;
+							foreach ($carts as $cart) : ?>
+								<tr>
+
+									<td><?php echo $cart->u_name; ?></td>
+									<td>$
+									<?php
+									 //echo $cart->fees;
+									if ($sl == 1) {
+										echo $cost->first_cost;
+										$temp=$cost->first_cost;
+										$total = $total + $cost->first_cost;
+									} else {
+										echo $cost->rest_cost;
+										$temp=$cost->rest_cost;
+										$total = $total + $cost->rest_cost;
+									}
+									//echo $cart->fees;
+									//$total = $total + $cart->fees;
+									?></td>
+									<td><?php echo $cart->subject; ?></td>
+									<td><?php echo date("d-m-Y", strtotime($cart->apply_date)); ?></td>
+									<input type="hidden" name="fees[]" value="<?php echo $temp; ?>">
+									<input type="hidden" name="cart_id[]" value="<?php echo $cart->id; ?>">
+									<input type="hidden" name="university_id[]" value="<?php echo $cart->university_id; ?>">
+									<input type="hidden" name="course_id[]" value="<?php echo $cart->course_id; ?>">
+									<input type="hidden" name="doc_id[]" value="<?php echo $cart->doc_id; ?>">
+									<input type="hidden" name="app_id[]" value="<?php echo $cart->app_id; ?>">
+									<input type="hidden" name="apply_date[]" value="<?php echo $cart->apply_date; ?>">
+								</tr>
+								<?php $sl++; ?>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+					<?php if (!empty($bank->id)) { ?>
+						<table class="table display table-bordered table-striped table-hover">
+							<thead>
+								<tr>
+									<th><?php echo lan('bank_name') ?></th>
+									<th><?php echo lan('detail') ?></th>
+									<th><?php echo lan('referance_id') ?></th>
+								</tr>
+							</thead>
+							<tbody id="copy_table">
+								<tr>
+									<td><?php echo $bank->bank_name; ?></td>
+									<td><?php echo $bank->detail ?></td>
+									<td><?php
+										foreach ([4, 4, 4, 4] as $c) $r[] = rand(".1e$c", "1e$c");
+										echo join('-', $r);
+										//$digits = 12;
+										//echo str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT); 
+										?></td>
+								</tr>
+							</tbody>
+						</table>
+						<button type="button" class="btn btn-info mb-4" id="copy_btn"><?php echo lan('copy') ?></button>
+						<input type="hidden" name="bank_id" value="<?php echo $bank->id; ?>">
+						<input type="hidden" name="ref_id" value="<?php echo join('-', $r); ?>">
+
+						<h4><?php echo lan('total_fees') ?>: $<?php echo $total; ?> <small class="float-right"><button type="submit" class="btn btn-success btn-md"><?php echo lan('confirm_apply') ?></button></small></h4>
+						</form>
+					<?php  } elseif ($payment->identity == 'stripe') { ?>
+						
+						<div class="row">
+						<div class="col-md-12"><div id="token_response"></div></div>
+						</div>
+						<button type="button" class="btn btn-success float-right" onclick="pay(<?php echo $total; ?>)">Pay $<?php echo $total; ?></button>
+					<?php  } elseif ($payment->identity == 'paypal') { ?>
+						
+						<button type="button" class="btn btn-success float-right" >Pay Paypal</button>
+					<?php } ?>
+
+				
+			</div>
+		</div>
+
+	</div>
+	</div>
+</div>
+<script src="<?php echo base_url() ?>/assets/dist/js/checkout.js"></script>
+<script type="text/javascript">
+	function pay(amount) {
+		
+		var handler = StripeCheckout.configure({
+			key: '<?php echo $payment->publishable_key; ?>', // your publisher key id
+			locale: 'auto',
+			token: function(token) {
+				
+				$.ajax({
+					url: "<?php echo site_url('students/payment') ?>",
+					method: 'post',
+					data: {
+						tokenId: token.id,
+						amount: amount,
+						
+					},
+					dataType: "json",
+					success: function(response) {
+						
+						if (response != 0) {
+						//alert('Payment successfully');
+						
+						window.location.href = "<?php echo base_url('students/invoice'); ?>"+'/'+response;
+					} else {
+						alert('Payment unsuccessful, please try again');
+					}
+							
+					}
+				})
+			}
+		});
+		handler.open({
+			name: 'Online Application',
+			description: 'Agency Company for higher education',
+			amount: amount * 100
+		});
+	}
+</script>
