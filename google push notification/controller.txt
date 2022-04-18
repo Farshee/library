@@ -1,0 +1,8 @@
+$msg = array(
+            'body'           =>  $data['title'],
+            'title'            => "New Campaign Added"
+          );
+          $donor_list = $this->authModel->donar_list();
+          foreach ($donor_list as $donor) {
+            $this->notification->push_notification_android($donor->device_token, $msg,3);
+          }
