@@ -1,0 +1,6 @@
+ $subroutes->add('get_payment', 'Donation::get_payment');
+    $subroutes->add('successpayments', 'Donation::successpayments');
+    $subroutes->add('get_payment', 'Donation::get_payment');
+    $subroutes->add('fails/(:any)', 'Donation::fails/$1');
+    $subroutes->add('cancel/(:any)', 'Donation::cancel/$1');
+    $subroutes->add('save_donation', 'Donation::save_donation');
