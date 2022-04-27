@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>Installar</title>
+
+        <!-- Bootstrap -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/css/style.min.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="page-wrapper">
+            <div class="container"> 
+                <!-- begin of row -->
+                <div class="row"> 
+                    <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1"> 
+                        <header class="header">
+                            <h1 class="header-title">Bdtask software installer</h1>
+                        </header>
+                        <div class="page-content">
+                            <div class="outer-container">
+                                <div id="wizard" class="aiia-wizard" style="display: none;">
+                                    <div class="aiia-wizard-step">
+                                        <h1>Step One</h1>
+                                        <div class="step-content step-one">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <form class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label for="inputEmail3" class="col-sm-4 col-form-label">Envato User ID</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="email" class="form-control" id="inputEmail3" placeholder="User ID">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="inputPassword3" class="col-sm-4 col-form-label">Purchase Key</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="password" class="form-control" id="inputPassword3" placeholder="Purchase Key">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-sm-offset-4 col-sm-4">
+                                                                <button type="submit" class="btn btn-success btn-sm">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.End of step one -->
+                                    </div>
+                                    <div class="aiia-wizard-step step-two">
+                                        <h1>Responsive</h1>
+                                        <div class="step-content step-two">
+                                            <div class="app_content">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <h3 class="title">Directory permissions & requirements</h3> display requirements
+                                                        <table class='table table-striped'>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Directory & Permissions</th>
+                                                                    <th class='cwidth'>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan='2'>
+                                                                        <div class='alert alert-success'><strong>Congratulations!</strong> Your server meets the requirements for install application.</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>../application/config/database.php is writeable</th>
+                                                                    <th><span class="label label-success">Success</span></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>../application/config/config.php is writeable</th>
+                                                                    <th><span class="label label-success">Success</span></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>php/Database.php is writeable</th>
+                                                                    <th><span class="label label-success">Success</span></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>sql/install.sql is writeable</th>
+                                                                    <th><span class="label label-success">Success</span></th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <div class="height"></div>
+                                                        <table class='table table-striped'>
+                                                            <thead> 
+                                                                <tr>
+                                                                    <th>Server Requirements</th>
+                                                                    <th class='cwidth'>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan='2'>
+                                                                        <div class='alert alert-danger'><strong>Your server does not meet the following requirements.</strong></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Safe Mode is <strong>off</strong></th>
+                                                                    <th><span class="label label-warning">Warning</span></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan='2'>
+                                                                        <div class='alert alert-success'>The following requirements were successfully met:</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>You have<strong> PHP 5.3.7</strong> (or greater; <strong>Current Version:5.6.38)</strong></th>
+                                                                    <th><span class="label label-success">Success</span></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>You have<strong> MySQL 4.1.13</strong> (or greater; <strong>Current Version:5.0.11)</strong></th>
+                                                                    <th><span class="label label-success">Success</span></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>You have the <strong>mysqli</strong> extension</th>
+                                                                    <th><span class="label label-success">Success</span></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>You have the <strong>session</strong> extension</th>
+                                                                    <th><span class="label label-success">Success</span></th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>You have the <strong>mcrypt</strong> extension</th>
+                                                                    <th><span class="label label-success">Success</span></th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.End of step two -->
+                                    </div>
+                                    <div class="aiia-wizard-step">
+                                        <h1>Not a carousel</h1>
+                                        <div class="step-content step-three">
+                                            <form action="#" method="post" >
+                                                <input type="hidden" name="_token" value="f5942b2ff09a83766c48c7bff4efa0bc2936d6aceb1c2fdfee05c3930a1f7b73"/>
+                                                <div class="form-group">
+                                                    <label for="database">Database Name </label>
+                                                    <input type="text" name="database" class="form-control" id="database" placeholder="Database Name" value="">
+                                                </div> 
+                                                <div class="form-group">
+                                                    <label for="username">Username </label>
+                                                    <input type="text" name="username" class="form-control" id="username" placeholder="Username" value="">
+                                                </div> 
+                                                <div class="form-group">
+                                                    <label for="password">Password </label>
+                                                    <input type="text" name="password" class="form-control" id="password" placeholder="Password" value="">
+                                                </div>  
+                                                <div class="form-group">
+                                                    <label for="hostname">Host Name </label>
+                                                    <input type="text" name="hostname" class="form-control" id="hostname" placeholder="Host Name"  value="localhost">
+                                                </div> 
+                                            </form>
+                                        </div>
+                                        <!-- /.End of step three -->
+                                    </div>
+                                    <div class="aiia-wizard-step">
+                                        <h1>Methods</h1>
+                                        <div class="step-content step-four">
+                                            <div class="row">
+                                                <div class="col-sm-7">
+                                                    <form class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label for="email" class="col-sm-4 col-form-label">Email</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="pass" class="col-sm-4 col-form-label">Password</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="password" class="form-control" id="pass">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-sm-offset-4 col-sm-4">
+                                                                <button type="submit" class="btn btn-success btn-sm">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.End of step four -->
+                                    </div>
+                                    <div class="aiia-wizard-step">
+                                        <h1>Callbacks</h1>
+                                        <div class="step-content step-five">
+
+
+
+                                        </div>
+                                        \<!-- /.End of step five -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <!-- /.End of page wrapper -->
+        <footer class="footer text-center">
+            <div class="container">
+                <div class="fText">Developed by <a href="#">bdtask</a></div>
+            </div>
+        </footer>
+        <!-- /.End of footer -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/script.min.js"></script>
+    </body>
+</html>
