@@ -1,0 +1,4 @@
+$routes->group('department', ['namespace' => 'App\Modules\Department\Controllers'], function($subroutes){
+    $subroutes->add('notify', 'Department::notify');
+    $subroutes->add('pusher_notify', 'Department::pusher_notify');
+});

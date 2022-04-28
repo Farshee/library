@@ -1,0 +1,43 @@
+public function notify()
+  {
+
+
+    if (!$this->session->get('isLogIn')) {
+      return redirect()->route('login');
+    }
+
+    $data['title']      = 'home';
+    $data['module']     = "Department";
+    $data['page']       = "department/notification";
+    return $this->template->layout($data);
+  }
+
+  public function pusher_notify()
+  {
+    
+    require 'vendor/autoload.php';
+    // print_r('test');
+    // exit;
+    $options = array(
+      'cluster' => 'ap2',
+      'useTLS' => true
+    );
+    $pusher = new Pusher\Pusher(
+      '0512c73238c70b2a7aa5',
+      'f7b2c038f7ea9c6e7f1e',
+      '1402383',
+      $options
+    );
+
+    if($this->request->getVar('name'))
+    {
+      $name = $this->request->getVar('name');
+    }
+    else
+    {
+      $name = "Client";
+    }
+
+    $data['message'] = 'Hello '.$name;
+    $pusher->trigger('my-channel', 'my-event', $data);
+  }
