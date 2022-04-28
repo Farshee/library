@@ -1,0 +1,7 @@
+<div class="inputBx">
+
+                            <label>Date & Time (GMT +1:00 hour)</label>
+
+                            <input  type="text" name="time"  class="datetimepicker"  value="" required="required">
+
+                            </div>
