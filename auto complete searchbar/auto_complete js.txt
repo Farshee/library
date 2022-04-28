@@ -1,0 +1,85 @@
+//header autocomplete search
+
+
+
+function course_list() {
+
+
+
+var base_url = $('#BaseUrl').val();
+
+
+
+    // Auto complete
+
+    var options = {
+
+        minLength: 0,
+
+        source: function( request, response ) {
+
+            var course_name = $('#autocomplete').val();
+
+            var degree_name = $('#degree_name').val();
+
+        $.ajax( {
+
+          url: base_url +"/websites/course_search",
+
+          method: 'post',
+
+          dataType: "json",
+
+          data: {
+
+            term: request.term,
+
+            course_name:course_name,
+
+            degree_name:degree_name
+
+          },
+
+          success: function( data ) {
+
+            response( data );
+
+
+
+          }
+
+        });
+
+      },
+
+       focus: function( event, ui ) {
+
+           $(this).val(ui.item.label);
+
+           return false;
+
+       },
+
+       select: function( event, ui ) {
+
+            $(this).parent().parent().find("#course_id").val(ui.item.value); 
+
+            $(this).unbind("change");
+
+            return false;
+
+       }
+
+   }
+
+
+
+   $('body').on('keypress.autocomplete', '#autocomplete', function() {
+
+       $(this).autocomplete(options);
+
+   });
+
+
+
+}
