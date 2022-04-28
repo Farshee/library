@@ -1,0 +1,1 @@
+moment(data.start_date).format('L, h:mm:ss a')
